@@ -25,9 +25,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "platform.h"
 
-void led_brightness (int brightness);
-void my_led_brightness (int run, int pause);
+//void led_brightness (int brightness);
+//void my_led_brightness (int run, int pause);
 
 /* USER CODE END Includes */
 
@@ -96,6 +97,11 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void plt_delay(uint32_t delay_ms)
+{
+	HAL_Delay(delay_ms);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -129,10 +135,9 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-int run = 1;
-int pause = 20;
-int b = 0;
-		int dir = 1;
+
+  plt_init();
+
   /* USER CODE END 2 */
 HAL_TIM_Base_Start_IT(&htim6);
 
@@ -140,10 +145,8 @@ HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  led_brightness(b);
-	  b = b + dir;
-	  if(b >= 100 || b <= 0) dir = dir*(-1);
-	  	  }
+
+	  plt_process();
 
 //	  HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, 1);
 //	  	  HAL_Delay(HAL_DELAY_t_ON);

@@ -5,7 +5,10 @@
 //#include "lab2_timer/lab2_timer.h"
 //#include "lab3_stepper/lab3_stepper.h"
 
-
+int run = 1;
+	int pause = 20;
+	int b = 0;
+	int dir = 1;
 /* Однократный вызов */
 int plt_init(void)
 {
@@ -17,9 +20,9 @@ int plt_init(void)
 /* Повторяющийся вызов */
 void plt_process(void)
 {
-
-	/* Устанавливаем задержку */
-	plt_delay(500);
+	led_brightness(b);
+	b = b + dir;
+	if(b >= 100 || b <= 0) dir = dir*(-1);
 }
 
 /* Перенести в main.c в user code */
