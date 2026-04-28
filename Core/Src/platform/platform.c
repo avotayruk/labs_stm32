@@ -13,13 +13,49 @@ int plt_init(void)
 	return 0;
 }
 
-
+uint32_t adc_value = 0;
+float    adc_voltage = 0;
 /* Повторяющийся вызов */
 void plt_process(void)
 {
-	/* Устанавливаем задержку */
-	plt_delay(500);
-}
+	 //ДЛЯ ЗАДАНИЯ 1
+	//	        plt_adc_start();
+	//	 	    plt_adc_conversion_poll();
+	//	 	    adc_value = plt_adc_get_value();
+	//	 	    plt_adc_stop();
+	//
+	//	 	    if (adc_value > 3000)
+	//	 	    {
+	//	 	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_SET);
+	//	 	    }
+	//	 	    else
+	//	 	    {
+	//	 	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
+	//	 	    }
+	//
+	//
+	//
+	//  }
+
+		  // ДЛЯ ЗАДАНИЯ 2
+	            plt_adc_start();
+	 	 	    plt_adc_conversion_poll();
+	 	 	    adc_value = plt_adc_get_value();
+	 	 	    adc_voltage = plt_adc_get_voltage();
+	 	 	    plt_adc_stop();
+
+	 	 	    if (adc_voltage > 3)
+	 	 	    {
+	 	 	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_SET);
+	 	 	    }
+	 	 	    else
+	 	 	    {
+	 	 	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
+	 	 	    }
+
+
+
+	   }
 
 /* Перенести в main.c в user code */
 //void plt_delay(uint32_t delay_ms)
