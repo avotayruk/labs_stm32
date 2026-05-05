@@ -18,7 +18,7 @@ int plt_init(void)
 void plt_process(void)
 {
 	/* Устанавливаем задержку */
-	plt_delay(500);
+	plt_delay(10);
 }
 
 /* Перенести в main.c в user code */

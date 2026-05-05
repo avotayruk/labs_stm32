@@ -63,54 +63,32 @@ static void send_response(uint8_t code, const char* msg)
 
 void plt_uart_proccess(void)
 {
-	if(plt_uart_is_available())
-	{
-//		uart_rx_flag = 0;
-//
-//	    plt_uart_send(&rx_byte); /* отправка нажатого символа обратно */
-//
-//	    if (rx_byte == '1') /* если 1, то вкл */
-//	    {
-//	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_SET);
-//	        plt_uart_send("\r\n[OK] LED ON\r\nWaiting input: ");
-//	    }
-//	    else if (rx_byte == '0') /* если 0, то выкл */
-//	    {
-//	        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
-//	        plt_uart_send("\r\n[OK] LED OFF\r\nWaiting input: ");
-//	    }
-//	    else
-//	    {
-//	        if (rx_byte != '\r' && rx_byte != '\n')
-//	        {
-//	            plt_uart_send("\r\n[ERROR] Use 1 or 0 only\r\nWaiting input: ");
-//	        }
+    if(plt_uart_is_available())
+    {
+        uart_rx_flag = 0;
 
+        plt_uart_send(&rx_byte);
 
-		uart_rx_flag = 0;
+        if (rx_byte == '1')
+        {
+            HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_SET);
+            send_response(0, "LED ON");
+        }
+        else if (rx_byte == '0')
+        {
+            HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
+            send_response(0, "LED OFF");
+        }
+        else
+        {
+            if (rx_byte != '\r' && rx_byte != '\n')
+            {
+                send_response(1, "Use only 1 or 0");
+            }
+        }
 
-			    plt_uart_send(&rx_byte); /* отправка нажатого символа обратно */
-
-			    if (rx_byte == '1') /* если 1, то вкл */
-			    {
-			        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_SET);
-			        send_response(0, "LED ON");
-			    }
-			    else if (rx_byte == '0') /* если 0, то выкл */
-			    {
-			        HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
-			        send_response(0, "LED OFF");
-			    }
-			    else
-			    {
-			        if (rx_byte != '\r' && rx_byte != '\n')
-			        {
-			        	send_response(1, "Use only 1 or 0");
-			        }
-	    }
-
-	    HAL_UART_Receive_IT(&huart1, (uint8_t*)&rx_byte, 1);
-	}
+        HAL_UART_Receive_IT(&huart1, (uint8_t*)&rx_byte, 1);
+    }
 }
 
 /* колбэк при получении байта */
